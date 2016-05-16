@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script src="lib/lodash-4.12.0.js"></script>
+		<script src="lib/jquery-2.2.3.js"></script>
+		<script src="lib/vue-1.0.js"></script>
+		
+		<div id="app">
+			
+			<input v-model="newTodo" v-on:keyup.enter="addTodo" />
+			
+			<ul>
+				<li v-for="todo in todos">
+					<!--这里的todo为外层v-for循环定义的todo变量-->
+					<span>{{todo.text}}</span>
+					<button v-on:click="removeTodo($index)">delete</button>
+				</li>
+			</ul>
+
+		</div>
+		
+		
+		
+		<script>
+			new Vue(
+				{
+					//定义VUE要绑定的dom对象
+					el:"#app",
+					
+					
+					//定义VUE的数据
+					data:{
+						//对应input v-model，值随着输入框的输入而变化
+						newTodo:"",
+						
+						//对应Ul列表项的数组
+						todos:[
+							{text: "试试在输入点什么吧"}
+						]
+					},
+					
+					
+					//定义VUE的方法
+					methods:{
+						
+						addTodo:function(){
+							var text =this.newTodo.trim()
+							if(text){
+								this.todos.push({text: text})
+								this.newTodo=""
+							}
+						},
+						
+						
+						removeTodo:function(index){
+							this.todos.splice(index, 1)
+						}
+						
+					}
+				}
+			)
+		</script>
+		
+	</body>
+</html>
