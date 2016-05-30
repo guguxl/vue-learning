@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="lib/vue-1.0.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			Hello, {{" my name is "+name+",  how old are you?"}}!
+			<br> {{ok?"YES":"NO"}}
+			<br> <a v-on:click="toggleOK">here</a>
+		</div>
+		
+		<script type="text/javascript">
+			
+			var vmData={
+				name:"guguxl",
+				ok:false
+			}
+		
+			var vm=new Vue({
+				el:"#app",
+				
+				data:vmData,
+				
+				methods:{
+					toggleOK:function(){
+						this.ok=!this.ok
+					}
+				},
+				
+				created:function(){
+					console.log("vue obj created....")
+				},
+				compiled:function(){
+					console.log("vue obj compiled.....")
+				},
+				ready:function(){
+					console.log("vue obj ready.....")
+				},
+				destroyed:function(){
+					console.log("vue obj destroyed.....")
+				},
+			})
+			
+		</script>
+		
+		
+	</body>
+</html>
