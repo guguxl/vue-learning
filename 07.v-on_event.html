@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script src="lib/vue-1.0.js"></script>
+		
+		<div id="app">
+			<!--将事件绑定到vm中的一个方法greeting-->
+			<button v-on:click="greeting" name="bt111">Greeting</button>
+			<!--还可以将事件绑定到一个内联语句，如下面例子所示，其中 $event为特殊变量，表示触发的事件对象-->
+			<button v-on:click="say('HI', $event)" name="btHi">Say Hi</button>
+			<button v-on:click="say('Hello', $event)" name="btHello">Say Hello</button>
+			
+			<!--其他的v-on事件（click, keyup, submit）及事件修饰符（stop, prevent, enter, capture, self....）：
+				
+				<a v-on:click.stop="doThis"></a>					阻止单击事件冒泡
+				<form v-on:submit.prevent="onSubmit"></form>		提交事件不再重载页面
+				a v-on:click.stop.prevent="doThat">				修饰符可以串联
+				<form v-on:submit.prevent></form>				只有修饰符
+				<div v-on:click.capture="doThis"></div>			添加事件侦听器时使用 capture 模式
+				<div v-on:click.self="doThat"></div>				只当事件在该元素本身（而不是子元素）触发时触发回调
+				<input v-on:keyup.enter="submit">				只有在 keyCode 是 13 时调用 vm.submit()
+				
+			-->
+		</div>
+		
+		<script type="text/javascript">
+			var vmData={
+				name:"Guxiangli"
+			}
+			
+			var vm=new Vue({
+				el:"#app",
+				data:vmData,
+				
+				methods:{
+					greeting:function(event){
+						alert("Hello, "+ this.name + "!")
+						alert(event.target.name)
+					},
+					
+					say:function(msg, event){
+						alert(msg+", "+event.target.name)
+						event.preventDefault()
+					}
+				}
+			})
+			
+			
+		</script>
+		
+	</body>
+</html>
