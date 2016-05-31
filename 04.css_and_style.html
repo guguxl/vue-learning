@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script src="lib/vue-1.0.js"></script>
+		<link type="text/css" rel="stylesheet" href="04.css"/>
+		
+		<div id="app">
+			<p class="{{className}}">直接赋值className</p>
+			<p class="fontSize" v-bind:class="{ 'fontColorRed':isRed, 'fontColorBlue':isBlue , 'fontColorYellow':isYellow }">对象字面表达式表示class</p>
+			<p v-bind:class="classObject">直接bind class到一个对象</p>
+			<p v-bind:style="styleObject">直接bind style到一个对象</p>
+		</div>
+		
+		<script>
+			
+			//对于styleObject属性，可以用驼峰式（camelCase）或短横分隔命名（kebab-case）
+			//如果用短横分隔命名（kebab-case），则属性名称需要加引号
+			var vmData={
+				className:"fontColorYellow",
+				
+				isRed:true,
+				isBlue:false,
+				isYellow:false,
+				
+				classObject:{
+					'fontColorRed':false,
+					'fontColorBlue':true,
+					'fontColorYellow':false
+				},
+				
+				
+				styleObject:{
+					'font-size': '15px',
+					'color':'green'
+				}
+				
+			}
+			
+			var vm=new Vue({
+				el:"#app",
+				data:vmData
+			})
+			
+			
+		</script>
+		
+		
+		
+	</body>
+</html>

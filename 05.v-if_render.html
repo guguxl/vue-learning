@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script src="lib/vue-1.0.js"></script>
+		
+		<div id="app">
+			<h1 v-if="insertH1">IF标题1</h1>
+			<h3 v-else>IF标题3</h3>
+			
+			<h1 v-show="showFlag">SHOW标题</h1>
+			
+			<template v-if="templateFlag">
+				<h1>模板标题</h1>
+				<p>模板段落1</p>
+				<p>模板段落2</p>
+			</template>
+			
+		</div>
+		
+		<script>
+			var vmData={
+				insertH1:false,
+				showFlag:false,
+				templateFlag:true
+			}
+			
+			var vm=new Vue({
+				el:"#app",
+				data:vmData
+			})
+			
+			//vmData.insertH1=true
+			
+		</script>
+		
+		
+	</body>
+</html>
