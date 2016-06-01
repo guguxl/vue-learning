@@ -8,6 +8,25 @@
 		<script src="lib/vue-1.0.js"></script>
 		<link type="text/css" rel="stylesheet" href="04.css"/>
 		
+<style type="text/css">
+	.fontSize {
+		font-size: 18px;
+		font-family: "新宋体";
+	}
+	
+	.fontColorRed {
+		color: red;
+	}
+	
+	.fontColorBlue {
+		color: blue;
+	}
+	
+	.fontColorYellow {
+		color: yellow;
+	}
+</style>		
+		
 		<div id="app">
 			<p class="{{className}}">直接赋值className</p>
 			<p class="fontSize" v-bind:class="{ 'fontColorRed':isRed, 'fontColorBlue':isBlue , 'fontColorYellow':isYellow }">对象字面表达式表示class</p>

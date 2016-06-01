@@ -14,11 +14,13 @@
 				<br><input type="text" v-model="message" placeholder="please input..." />
 			</div>
 			
+			
 			<div>
 				<!--checkBox：单个复选框，v-model绑定布尔类型变量，则其值表示复选框是否选中（true|false）-->
 				<br><input type="checkbox" id="cb" v-model="checked"/>
 				<label for="cb">{{checked}}</label>
 			</div>
+			
 			
 			<div>
 				<!--checkBox：多个复选框，v-model都绑定到同一个数组变量，则其值表示复选框的value属性是否作为元素添加到数组
@@ -32,7 +34,62 @@
 				<label for="MikeID">Mike</label>
 				<br> <span>CheckedNames: {{checkedNames | json}}</span>
 			</div>
+			<!--从上面可以看出，同样的input控件，绑定到不同变量类型，取值也会不同-->
 			
+			
+			<!--将radio通过v-model绑定，被绑定变量的值将被设置为radio的value值-->
+			<div>
+				<br>
+				<input type="radio" id="OneId" value="One" v-model="picked" />
+				<label for="OneId">One</label>
+				<input type="radio" id="TwoId" value="Two" v-model="picked" />
+				<label for="TwoId">Two</label>
+				<br><span>Picked: {{picked}}</span>
+			</div>
+			
+			
+			<!--select单选-->
+			<div>
+				<br>
+				<select v-model="selectedValue">
+					<option value="opt1">option-1</option>
+					<option value="opt2">option-2</option>
+					<option value="opt3">option-3</option>
+				</select>
+				<br><span>Selected Value: {{selectedValue}}</span>
+			</div>
+			
+			
+			<!--select多选-->
+			<div>
+				<br>
+				<select v-model="multiSelectedValue" multiple>
+					<option value="opt1">option-1</option>
+					<option value="opt2">option-2</option>
+					<option value="opt3">option-3</option>
+				</select>
+				<br><span>Selected Value: {{multiSelectedValue | json}}</span>
+			</div>
+			
+			
+			<!--option用v-for绑定数组，动态生成选项条目。注意条目的value属性，由于需要绑定到数组元素的text，需要使用v-bind指令-->
+			<div>
+				<br>
+				<select v-model="multiSelectedValue2" multiple size="6">
+					<option v-for="opt in options" v-bind:value="opt.value">{{opt.text}}</option>
+				</select>
+				<br><span>Selected Value: {{multiSelectedValue2 | json}}</span>
+			</div>
+			
+			<!--对于单选按钮，勾选框及选择框选项，v-model 绑定的 value 通常是静态字符串（对于勾选框是逻辑值），但是有时我们想绑定 value 
+				到 Vue 实例的一个动态属性上，这时可以用 v-bind 实现，并且这个属性的值可以不是字符串。（如上例所示）-->
+			
+			<!--
+			参数特性：
+			lazy：在默认情况下，v-model 在input 事件中同步输入框值与数据。使用lazy参数，可以input框的值改在change事件中同步
+			number：如果想自动将用户的输入转为 Number 类型（如果原值的转换结果为 NaN 则返回原值），可以使用该参数
+			debounce：设置一个最小的延时，在每次敲击之后延时同步输入框的值与数据。如果每次更新都要进行高耗操作（例如在输入提示中 Ajax 请求），它较为有用。
+			-->
 			
 		</div>
 		
@@ -40,7 +97,20 @@
 			var vmData={
 				message:"",
 				checked:true,
-				checkedNames:[]
+				checkedNames:[],
+				picked:"",
+				selectedValue:"",
+				multiSelectedValue:[],
+				
+				options:[
+					{text:"选项01", value:"01"},
+					{text:"选项02", value:"02"},
+					{text:"选项03", value:"03"},
+					{text:"选项04", value:"04"},
+					{text:"选项05", value:"05"}
+				],
+				multiSelectedValue2:[]
+				
 			}
 			
 			var vm=new Vue({

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <script src="lib/vue-1.0.js"></script>
+        
+        <!--更多内容见教程：
+        
+        	类名的添加和切换取决于 transition 特性的值。比如 transition="fade"，会有三个 CSS 类名：
+			.fade-transition 始终保留在元素上。
+			.fade-enter 定义进入过渡的开始状态。只应用一帧然后立即删除。
+			.fade-leave 定义离开过渡的结束状态。在离开过渡开始时生效，在它结束后删除。
+			如果 transition 特性没有值，类名默认是 .v-transition, .v-enter 和 .v-leave。
+        	
+        	
+        	我们可以在过渡的 JavaScript 定义中声明自定义的 CSS 过渡类名。这些自定义类名会覆盖默认的类名。
+        	当需要和第三方的 CSS 动画库，比如 Animate.css 配合时会非常有用：
+			
+			<div v-show="ok" class="animated" transition="bounce">Watch me bounce</div>
+			Vue.transition('bounce', {
+  				enterClass: 'bounceInLeft',
+  				leaveClass: 'bounceOutRight'
+			})
+        
+        -->
+        
+        <style type="text/css">
+        ul {
+        	padding-left: 0;
+        	font-family: Helvetica, Arial, sans-serif;
+        }
+        
+        .staggered-transition {
+	        transition: all .5s ease;
+    	    overflow: hidden;
+        	margin: 0;
+        	height: 20px;
+        }
+        
+        .staggered-enter, .staggered-leave {
+        	opacity: 0;
+        	height: 0;
+        }
+        </style>
+        
+        
+        <div id="demo">
+            <input v-model="query">
+            <ul>
+                <li v-for="item in list | filterBy query" transition="staggered" stagger="100">
+                    {{item.msg}}
+                </li>
+            </ul>
+        </div>
+        
+        
+		<script type="application/javascript">
+			new Vue({
+				el: '#demo',
+				data: {
+					query: '',
+					list: [
+						{msg: 'Bruce Lee'}, 
+						{msg: 'Jackie Chan'}, 
+						{msg: 'Chuck Norris'}, 
+						{msg: 'Jet Li'}, 
+						{msg: 'Kung Fury'}
+					]
+				}
+			})
+		</script>
+        
+        
+        
+    </body>
+</html>
