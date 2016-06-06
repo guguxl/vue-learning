@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script src="lib/vue-1.0.js"></script>
+		
+		<!--VUE支持使用template定义一个模板片段，这里的模板片段被作为子组件的template。见js中child组件的定义-->
+		<template id="child-template">
+			<input v-model="msg" />
+			<button v-on:click="notify">Dispatch Event</button>
+		</template>
+		
+		<div id="app">
+			<p>Messages: {{messages|json}}</p>
+			<child v-on:child-msg="handleEvent"></child>
+		</div>
+		
+		<script>
+			/*父子组件间通信：
+			 * 1)子组件可以用 this.$parent 访问它的父组件。根实例的后代可以用 this.$root 访问它。父组件有一个数组 this.$children，包含它所有的子元素。
+			 *   子组件应当避免直接依赖父组件的数据，尽量显式地使用 props 传递数据。在子组件中修改父组件的状态是非常糟糕的做法。
+			 * 2)每个 Vue 实例都是一个事件触发器：
+			 *   使用 $on() 监听事件；
+			 *   使用 $emit() 在它上面触发事件；
+			 *   使用 $dispatch() 派发事件，事件沿着父链冒泡；
+			 *   使用 $broadcast() 广播事件，事件向下传导给所有的后代。
+			 */
+			
+			Vue.component("child",{
+				//使用模板片段定义template
+				template:"#child-template",
+				//data选项为一个返回对象的函数
+				data:function(){
+					return {msg:"hello"}
+				},
+				
+				methods:{
+					//函数中的this指子组件实例。使用this.$dispatch()方法派发一个自定义的事件child-msg，第二个参数为事件要传递的消息内容
+					notify:function(){
+						if(this.msg.trim()){
+							this.$dispatch("child-msg", this.msg)
+							this.msg=""
+						}
+					}
+				}
+			})
+			
+			//定义了一个父组件，在父组件中捕获子组件的事件并处理
+			//var parent=
+			new Vue({
+				el:"#app",
+				//定义存放事件的消息内容的素组messages
+				data:{
+					messages:[]
+				},
+				
+				
+				//如下两种处理事件的方法：
+				//一是在methods中定义一个函数，并在html代码中使用v-on指令为子组件的事件指定处理函数；
+				//二是在events选项中定义各个事件及对应的处理函数
+				//以上两种方法只选其一即可，如果采用第二种方法，则无需再html代码中使用v-on指令来绑定事件处理函数。
+				//相对而言，第一种方法更接近原生DOM事件的处理方法，也更容易理解
+				
+				methods:{
+					//处理捕获到事件child-msg的方法
+					handleEvent:function(msg){
+						this.messages.push(msg)
+					}
+				},
+				
+				events:{
+					"child-msg":function(msg){
+						this.messages.push(msg)
+					}
+				}
+			})
+			
+			
+		</script>
+		
+	</body>
+</html>
