@@ -8,20 +8,38 @@
 		<script src="lib/vue-1.0.js"></script>
 		
 		<div id="app">
-			
+			<!--见script代码中Vue.component()方法注册的组件-->
+			<my-component></my-component>
+			<my-component-h1></my-component-h1>
 		</div>
 		
-		<script>
-			var vmData={
-				
-			}
-			
-			var vm=new Vue({
-				el:"#app",
-				data:vmData
-			})
-			
-		</script>
 		
+<script type="application/javascript">
+	//使用Vue.extend定义一个组件
+	var MyComponent = Vue.extend({
+		template: "<h1>A custom component!!!!</h1>"
+	})
+	
+	//使用Vue.component注册该组件
+	Vue.component('my-component', MyComponent)
+	
+	//在一个步骤中定义和注册组件！
+	Vue.component('my-component-h1',{
+		template:"<h2>在一个步骤中定义和注册组件！</h2>"
+	})
+	
+	//使用Vue()创建根实例。组件作为该根实例的子组件（如上面的div定义）
+	new Vue({
+		el: "#app"
+	})
+	
+</script>
+
+
+
+
+
+
+
 	</body>
 </html>
