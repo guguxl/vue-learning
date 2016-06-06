@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script src="lib/vue-1.0.js"></script>
+		
+		<div id="app">
+			<child my-message="hello!!!" name="guguxl" int-value="3"></child>
+			<br>
+			<child my-message="hello!!!" name="guguxl" :int-value="3"></child>
+			<br>
+			<br>
+			<input v-model="parentMsg" />
+			<br>
+			<child v-bind:my-message="parentMsg" name="guguxl"></child>
+			<br><br>
+			<props-valid-example :prop-a="12" prop-b="guguxl" prop-c="vue.js is cool"></props-valid-example>
+		</div>
+		
+		<script>
+			/*
+			 * 使用props选项传递数据给组件：
+			 * 1）在组件定义中使用props选项定义该组件的自定义属性，该选项的值为数组，其中定义自定义属性的名称
+			 * 2）在组件的template选项中可以使用自定义属性，使用{{propName}}来引用属性对应的值
+			 * 3）在使用组件时，可以为属性赋值，如上面的div内容
+			 * 4）HTML属性不区分大小写。名字形式为 camelCase 的 prop 用作特性时，需要转为 kebab-case（短横线隔开），比如本例中的myMessage属性
+			 * 5）和普通html元素的属性一样，也可以使用v-bind绑定组件的属性到父组件的数据，比如本例中的my-message属性绑定到父组件的parentMsg数据，
+			 *    使得该属性随着父组件数据的变化而变化
+			 * 6）当使用字面量语法传递一个数值时（比如上面第一个int-value例子），该数值将被以字符串形式传递。
+			 *    如果需要实际传递一个javascript数值，需要使用动态语法（比如第二个int-value例子），让它的值被当作JavaScript 表达式计算
+			 * 7）prop 默认是单向绑定：当父组件的属性变化时，将传导给子组件，但是反过来不会。这是为了防止子组件无意修改了父组件的状态。
+			 *    不过，也可以使用 .sync 或 .once 绑定修饰符显式地强制双向或单次绑定。
+			 *    .sync双向绑定会把子组件的属性同步回父组件的 parentMsg 属性。.once单次绑定在建立之后不会同步parentMsg之后的变化。
+			 * 8）可以为组件的属性指定验证要求，此时props的值是一个对象，包含验证要求，比如：类型、是否必须、默认值、绑定类型、验证函数、转换函数等等
+			 */
+			
+			
+			Vue.component('child',{
+				props:['myMessage','name','intValue'],
+				template:'<span>{{myMessage}} {{name}}, {{intValue + 1}}</span>'
+			})
+			
+			
+			Vue.component('props-valid-example',{
+				
+				props:{
+					propA:Number,
+					propB:[Number, String],
+					propC:{
+						type:String,
+						required:true,
+						default:"Vue.js is Cool...."
+					}
+				},
+				
+				template:'<span>{{propA}}, {{propB}}, {{propC}}</span>'
+			})
+			
+			
+			
+			
+			var vm=new Vue({
+				el:"#app",
+				data:{
+					parentMsg:"hello, "
+				}
+			})
+			
+		</script>
+		
+	</body>
+</html>

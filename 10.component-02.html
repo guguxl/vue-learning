@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script src="lib/vue-1.0.js"></script>
+		
+		<div id="app">
+			<parent-component>
+			</parent-component>
+		</div>
+		
+		<script>
+			/* 
+			 * 本示例展示了直接在父组件的定义中使用 components 选项来定义子组件的方法。
+			 * 定义子组件时必须要使用name选项来为子组件设置一个名称，该名称可以用在父组件的template选项中。
+			 * 
+			 * 注意在父组件的template中，必须要使用展开的子组件形式，如“<child-component-a></child-component-a>”这样。
+			 * 如果使用“<child-component-a/>”这样的缩写，子组件不会被识别。
+			 * 作为一个好的习惯，后续关于VUE组件最好都采用上面的写法，避免不必要的困扰。
+			 */
+			
+			var Parent=Vue.extend({
+				template:'<div>'+
+							'<child-component-a></child-component-a>'+
+							'<child-component-b></child-component-b>'+
+						'</div>',
+				
+				components:{
+					ChildComponentA:{
+						name:'child-component-a',
+						template:'<h3>Child Component A</h3>'
+					},
+					
+					ChildComponentB:{
+						name:'child-component-b',
+						template:'<h3>Child Component B</h3>'
+					}
+				}
+			})
+			
+			
+			Vue.component('parent-component',Parent)
+			
+			
+			var vm=new Vue({
+				el:"#app"
+			})
+			
+		</script>
+		
+	</body>
+</html>
