@@ -7,6 +7,7 @@
 	<body>
 		<script src="lib/vue-1.0.js"></script>
 		
+		
 		<!--VUE支持使用template定义一个模板片段，这里的模板片段被作为子组件的template。见js中child组件的定义-->
 		<template id="child-template">
 			<input v-model="msg" />
@@ -18,6 +19,9 @@
 			<child v-on:child-msg="handleEvent"></child>
 		</div>
 		
+		
+		
+		
 		<script>
 			/*父子组件间通信：
 			 * 1)子组件可以用 this.$parent 访问它的父组件。根实例的后代可以用 this.$root 访问它。父组件有一个数组 this.$children，包含它所有的子元素。
@@ -27,6 +31,10 @@
 			 *   使用 $emit() 在它上面触发事件；
 			 *   使用 $dispatch() 派发事件，事件沿着父链冒泡；
 			 *   使用 $broadcast() 广播事件，事件向下传导给所有的后代。
+			 * 3)可以使用 v-ref 为子组件指定一个索引 ID。
+			 *   例如：“<child-component v-ref:child1></child-component>”，
+			 *   父组件可以通过该ID访问子组件对象：“var child = parent.$refs.child1”
+			 *   v-ref 和 v-for 一起用时，ref 是一个数组或对象，包含相应的子组件。
 			 */
 			
 			Vue.component("child",{
@@ -57,13 +65,13 @@
 					messages:[]
 				},
 				
-				
-				//如下两种处理事件的方法：
-				//一是在methods中定义一个函数，并在html代码中使用v-on指令为子组件的事件指定处理函数；
-				//二是在events选项中定义各个事件及对应的处理函数
-				//以上两种方法只选其一即可，如果采用第二种方法，则无需再html代码中使用v-on指令来绑定事件处理函数。
-				//相对而言，第一种方法更接近原生DOM事件的处理方法，也更容易理解
-				
+				/*
+				 * 如下两种处理事件的方法：
+				 * 一是在methods中定义一个函数，并在html代码中使用v-on指令为子组件的事件指定处理函数；
+				 * 二是在events选项中定义各个事件及对应的处理函数
+				 * 以上两种方法只选其一即可，如果采用第二种方法，则无需再html代码中使用v-on指令来绑定事件处理函数。
+				 * 相对而言，第一种方法更接近原生DOM事件的处理方法，也更容易理解
+				 */
 				methods:{
 					//处理捕获到事件child-msg的方法
 					handleEvent:function(msg){
