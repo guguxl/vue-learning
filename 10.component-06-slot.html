@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script src="lib/vue-1.0.js"></script>
+		<!-- 
+			当父子组件组合完成某些功能时，在父组件的模板定义中可能使用如下形式来使用到子组件：
+			<child-component>
+				其他的一些内容、元素等等
+			</child-component>
+			
+			通常来说，子组件也有模板，正常来说当父组件使用“<child-component></child-component>”方式来调用子组件时，正常将
+			使用子组件的模板来渲染。但如果用上面的方式来使用子组件时，则“其他的一些内容、元素等等”就无法处理了，不会被显示。
+			
+			当在子组件的模板定义中使用<slot></slot>来预留“插槽”，则当父组件使用上面那种形式来使用子组件时，“其他的一些内容、元素等等”将会
+			被渲染到“插槽”位置。如果使用普通方式来使用子组件，则“插槽”位置仍然显示“<slot>中的内容</slot>”。
+			
+			下面的例子演示了这个原理。
+		-->
+		
+		
+		<!--子组件的模板定义，其中定义了slot，有可能被父组件的内容替换。-->
+		<template id="my-component">
+			<div>
+				<h1>This is my component!</h1>
+				<slot>
+					如果没有分发内容，就显示我这个SLOT！
+				</slot>
+			</div>
+		</template>
+		
+		<!--父组件，调用my-component-->
+		<div id="app">
+			<!-- 普通形式调用子组件，将显示子组件中slot内容 -->
+			<my-component></my-component>
+			<br><br>
+			
+			<!--这种形式调用子组件，子组件包裹的内容/元素将被渲染到其模板的slot位置-->
+			<my-component>
+				<p>This is some original content</p>
+  				<p>This is some more original content</p>
+			</my-component>
+		</div>
+		
+		
+		<script>
+			Vue.component("my-component",{
+				template:"#my-component"
+			})
+			
+			var vm=new Vue({
+				el:"#app"
+			})
+			
+		</script>
+		
+	</body>
+</html>

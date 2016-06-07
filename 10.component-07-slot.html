@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script src="lib/vue-1.0.js"></script>
+		
+		<!--
+        	具名slot：
+        	<slot> 元素可以用一个特殊特性 name 配置如何分发内容。多个 slot 可以有不同的名字。具名 slot 将匹配内容片段中有对应 slot 名称的元素。
+        	仍然可以有一个匿名 slot，它是默认 slot，作为找不到匹配slot的内容片段的默认插槽。如果没有默认的 slot，这些找不到匹配的内容片段将被抛弃。
+        	-->
+		
+		
+		<!--子组件的模板定义，其中定义了多个slot，slot有对应的名字 -->
+		<template id="my-component">
+			<div>
+				<h1>子组件本身的内容！！！</h1>
+				<slot name="slot1"></slot>
+				<!--默认slot-->
+				<slot></slot>
+				<slot name="slot2"></slot>
+			</div>
+		</template>
+		
+		<!--父组件，调用my-component-->
+		<div id="app">
+			<!--这种形式调用子组件，包裹的内容/元素将被渲染到其模板的slot位置
+				根据slot名称找到对应的渲染位置。
+				可以看出：最终渲染效果不是由包裹元素的顺序决定，而是由my-component中定义的slot位置决定的
+			-->
+			<my-component>
+				<h3 slot="slot1">根据slot属性，我将被渲染到slot1位置</h3>
+				<h3 slot="slot2">根据slot属性，我将被渲染到slot2位置</h3>
+				
+				<!--下面的元素将被渲染到默认slot的位置-->
+				<p>我们将被渲染到默认slot位置</p>
+				<ul>
+					<li>item1</li>
+					<li>item2</li>
+					<li>item3</li>
+				</ul>
+			</my-component>
+		</div>
+		
+		
+		<script>
+			Vue.component("my-component",{
+				template:"#my-component"
+			})
+			
+			var vm=new Vue({
+				el:"#app"
+			})
+			
+		</script>
+		
+	</body>
+</html>
