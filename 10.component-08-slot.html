@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script src="lib/vue-1.0.js"></script>
+		
+		<!--
+        	知乎上的例子1：
+        	slot的意思是插槽，想想你的电脑主板上的各种插槽，有插CPU的，有插显卡的，有插内存的，有插硬盘的，所以假设有个组件是computer，其模板如下
+        -->
+        
+        
+        <!--子组件模板-->
+		<template id="computer">
+			<div>
+				<h3>电脑配置清单：</h3>
+				<ol>
+					<li><slot name="CPU">这里是CPU配置</slot>
+					<li><slot name="GPU">这里是显卡配置</slot></li>
+					<li><slot name="memory">这里是内存配置</slot></li>
+					<li><slot name="disk">这里是硬盘配置</slot></li>
+				</ol>
+			</div>
+		</template>
+		
+        <!--父组件模板-->
+		<template id="office">
+			<computer></computer>
+			
+			<computer>
+				<span slot="CPU">酷睿 i5</span>
+				<span slot="GPU">集成显卡</span>
+				<span slot="memory">8G</span>
+				<span slot="disk">SSD 256G</span>
+				<span>无默认slot，将被丢弃的内容</span>
+			</computer>
+		</template>
+		
+        <!--app挂载点-->
+		<div id="app">
+			<office></office>
+		</div>
+		
+		<script>
+			Vue.component("computer",{
+				template:"#computer"
+			})
+			Vue.component("office",{
+				template:"#office"
+			})
+			
+			var vm=new Vue({
+				el:"#app"
+			})
+			
+		</script>
+		
+	</body>
+</html>

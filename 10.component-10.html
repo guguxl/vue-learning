@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script src="lib/vue-1.0.js"></script>
+		
+<style type="text/css">
+	.fade-transition {
+		transition: opacity .3s ease;
+	}
+	
+	.fade-enter,
+	.fade-leave {
+		opacity: 0;
+	}
+</style>		
+		
+		
+		<!--  定义了三个组件，通过特殊元素component在组件间进行切换  -->
+		<template id="component1">
+			<h1>组件0001</h1>
+		</template>
+		<template id="component2">
+			<h1>组件00002</h1>
+		</template>
+		<template id="component3">
+			<h1>组件000003</h1>
+		</template>
+		
+		
+		<div id="app">
+			<!--
+				如下：使用is指令绑定currComponent变量，将根据currComponent变量的值确定挂载哪个组件。
+				keep-alive：把切换出去的组件保留在内存中，可以保留它的状态或避免重新渲染。
+				可以使用transition指定组件切换时的过渡效果。
+				transition-mode：
+					in-out：新组件先过渡进入，等它的过渡完成之后当前组件过渡出去。
+					out-in：当前组件先过渡出去，等它的过渡完成之后新组件过渡进入。
+			-->
+			<component 
+				:is="currComponent" 
+				keep-alive
+				transition="fade"
+				transition-mode="in-out">
+			</component>	
+		</div>
+		
+<script>
+	//定义并注册三个组件
+	var component1 = Vue.component("component1", {
+		template: "#component1"
+	})
+	var component2 = Vue.component("component2", {
+		template: "#component2"
+	})
+	var component3 = Vue.component("component3", {
+		template: "#component3"
+	})
+	
+	
+	//currComponent指定当前挂载哪个组件
+	var vmData = {
+		currComponent: "component1"
+	}
+	
+	
+	var vm = new Vue({
+		el: "#app",
+		data: vmData,
+	})
+</script>
+
+
+	</body>
+</html>

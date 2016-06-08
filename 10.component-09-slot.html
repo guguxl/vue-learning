@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script src="lib/vue-1.0.js"></script>
+		
+		<!--	知乎上的例子2：        -->
+        
+<style>
+	.Alert__close {
+		font-weight: bold;
+		cursor: pointer;
+	}
+	
+	.Alert--Success {
+		color: green;
+	}
+	
+	.Alert--Warning {
+		color: #aa0;
+	}
+	
+	.Alert--Error {
+		color: red;
+	}
+</style>
+
+
+<template id="alert-template">
+	<div :class="alertClasses" v-show="show">
+		<slot><strong>Default!</strong> Hello World~</slot>
+		<span class="Alert__close" @click="show = false">x</span>
+	</div>
+</template>
+        
+        
+        <alert>Default</alert>
+        <alert type="success">SUCCESS!!!</alert>
+        <alert type="warning">WARNING...</alert>
+        <alert type="error">ERROR!!!!!!</alert>
+        
+        
+<script>
+	Vue.component('alert', {
+		template: '#alert-template',
+		props: ['type'],
+		computed: {
+			alertClasses: function() {
+				return {
+					'Alert--Success': this.type === 'success',
+					'Alert--Warning': this.type === 'warning',
+					'Alert--Error': this.type === 'error'
+				}
+			}
+		},
+		data: function() {
+			return {
+				show: true
+			};
+		}
+	});
+
+	new Vue({
+		el: 'body'
+	});
+</script>
+
+	</body>
+</html>
